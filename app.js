@@ -21,6 +21,20 @@ lengthInput.addEventListener('input', () => {
   generatePassword(); // regenera al mover
 });
 
+// Índice aleatorio uniforme en [0, max) usando el generador criptográfico
+// del navegador. Descarta los valores del final del rango (rejection sampling)
+// para que el módulo no favorezca a ningún carácter.
+function secureRandomIndex(max) {
+  const limit = Math.floor(0x100000000 / max) * max;
+  const buf = new Uint32Array(1);
+  let value;
+  do {
+    crypto.getRandomValues(buf);
+    value = buf[0];
+  } while (value >= limit);
+  return value % max;
+}
+
 // Generar contraseña
 function generatePassword() {
   let chars = '';
@@ -39,7 +53,7 @@ function generatePassword() {
   const length = lengthInput.value;
   
   for (let i = 0; i < length; i++) {
-    password += chars.charAt(Math.floor(Math.random() * chars.length));
+    password += chars.charAt(secureRandomIndex(chars.length));
   }
 
   passwordInput.value = password;
