@@ -38,14 +38,29 @@ function generatePassword() {
 }
 
 // Copiar al portapapeles
-copyBtn.addEventListener('click', () => {
+const copyStatus = document.getElementById('copyStatus');
+
+// Muestra un aviso debajo de la contraseña y lo borra a los 2 segundos
+function showCopyStatus(message, isError) {
+  copyStatus.textContent = message;
+  copyStatus.classList.toggle('error', isError);
+  setTimeout(() => { copyStatus.textContent = ''; }, 2000);
+}
+
+copyBtn.addEventListener('click', async () => {
   if (!passwordInput.value || passwordInput.value.includes('Selecciona')) return;
-  
+
   passwordInput.select();
-  navigator.clipboard.writeText(passwordInput.value);
-  
-  copyBtn.textContent = '✅';
-  setTimeout(() => copyBtn.textContent = '📋', 2000);
+  try {
+    // writeText es asíncrono: "await" espera a saber si de verdad se copió
+    await navigator.clipboard.writeText(passwordInput.value);
+    copyBtn.textContent = '✅';
+    setTimeout(() => copyBtn.textContent = '📋', 2000);
+    showCopyStatus('Contraseña copiada', false);
+  } catch (error) {
+    // Pasa si el navegador no permite copiar (por ejemplo, sin HTTPS)
+    showCopyStatus('No se pudo copiar: la contraseña quedó seleccionada, cópiala a mano', true);
+  }
 });
 
 // Actualizar barra de fuerza

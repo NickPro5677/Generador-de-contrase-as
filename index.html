@@ -12,9 +12,10 @@
     <p class="subtitle">Crea contraseñas ultra-seguras al instante</p>
 
     <div class="password-display">
-      <input type="text" id="password" readonly placeholder="Pulsa 'Generar' para comenzar" />
-      <button id="copyBtn" title="Copiar al portapapeles">📋</button>
+      <input type="text" id="password" readonly aria-label="Contraseña generada" placeholder="Pulsa 'Generar' para comenzar" />
+      <button id="copyBtn" type="button" title="Copiar al portapapeles" aria-label="Copiar contraseña">📋</button>
     </div>
+    <p id="copyStatus" class="copy-status" role="status" aria-live="polite"></p>
 
     <div class="options">
       <div class="option">
@@ -31,7 +32,7 @@
     <button id="generateBtn" class="generate-btn">Generar Contraseña Segura</button>
 
     <div class="strength">
-      Seguridad: <span id="strengthText">Muy fuerte</span>
+      Seguridad: <span id="strengthText" aria-live="polite">Muy fuerte</span>
       <div class="strength-bar">
         <div id="strengthBar" class="very-strong"></div>
       </div>

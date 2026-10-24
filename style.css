@@ -86,3 +86,20 @@ h1 { text-align: center; margin-bottom: 0.5rem; color: #333; }
 .medium { background: #f59e0b; width: 60%; }
 .strong { background: #10b981; width: 80%; }
 .very-strong { background: #4ade80; width: 100%; }
+/* Aviso al copiar (lo leen también los lectores de pantalla) */
+.copy-status {
+  min-height: 1.2em;
+  margin: 6px 0 0;
+  font-size: 0.9rem;
+  color: #2e7d32;
+}
+.copy-status.error {
+  color: #c62828;
+}
+
+/* Borde visible al moverse con el teclado (Tab) */
+button:focus-visible,
+input:focus-visible {
+  outline: 3px solid #4a90e2;
+  outline-offset: 2px;
+}
