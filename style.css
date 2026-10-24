@@ -24,6 +24,9 @@ h1 { text-align: center; margin-bottom: 0.5rem; color: #333; }
 }
 #password {
   flex: 1;
+  /* Sin esto el campo pide unos 290px fijos y empuja la tarjeta fuera de la pantalla */
+  width: 0;
+  min-width: 0;
   padding: 1rem;
   font-size: 1.1rem;
   border: 2px solid #ddd;

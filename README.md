@@ -1,6 +1,6 @@
 # Generador de contraseñas
 
-Aplicación web para crear contraseñas seguras al instante, hecha con HTML, CSS y JavaScript puro (sin dependencias).
+Aplicación web para crear contraseñas seguras al instante, hecha con HTML, CSS y JavaScript puro (sin dependencias). Funciona cómoda desde el teléfono.
 
 [![Pruebas](https://github.com/NickPro5677/Generador-de-contrase-as/actions/workflows/test.yml/badge.svg)](https://github.com/NickPro5677/Generador-de-contrase-as/actions/workflows/test.yml)
 [![Licencia: MIT](https://img.shields.io/badge/licencia-MIT-green.svg)](LICENSE)
@@ -8,7 +8,7 @@ Aplicación web para crear contraseñas seguras al instante, hecha con HTML, CSS
 
 👉 **Pruébalo aquí:** https://nickpro5677.github.io/Generador-de-contrase-as/
 
-<img src="docs/captura.png" alt="Captura del generador de contraseñas" width="420">
+<img src="docs/captura.png" alt="Generador de contraseñas en un teléfono" width="300">
 
 ## Funciones
 
@@ -22,7 +22,7 @@ Aplicación web para crear contraseñas seguras al instante, hecha con HTML, CSS
 
 ## Cómo usarlo
 
-**Desde el navegador:** abre la [demo en vivo](https://nickpro5677.github.io/Generador-de-contrase-as/). No hay que instalar nada.
+**Desde el teléfono:** abre la [demo en vivo](https://nickpro5677.github.io/Generador-de-contrase-as/). No hay que instalar nada.
 
 **En una computadora:** descarga o clona el repositorio y abre `index.html` en el navegador. No hace falta servidor.
 
