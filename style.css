@@ -1,22 +1,81 @@
+/* ============================================
+   TOKENS DE DISEÑO COMPARTIDOS (estilo claro tipo Apple)
+   Mismo bloque en Generador-de-contrase-as y Calculadora-digital.
+   ============================================ */
+:root {
+  /* Colores */
+  --bg: #f5f5f7;            /* fondo de la página */
+  --card: #ffffff;          /* tarjetas */
+  --fill: #f5f5f7;          /* campos y botones secundarios */
+  --fill-hover: #e8e8ed;
+  --border: #d2d2d7;        /* bordes finos */
+  --text: #1d1d1f;          /* texto principal */
+  --text-2: #6e6e73;        /* texto secundario (gris) */
+  --accent: #0071e3;        /* único acento azul */
+  --accent-hover: #0062c4;  /* más oscuro: mantiene el contraste con texto blanco */
+  --accent-text: #0066cc;   /* azul para TEXTO sobre fondos grises (5.1:1 sobre #f5f5f7) */
+  --on-accent: #ffffff;
+  --success: #1f7a35;       /* verde oscuro: 5.4:1 sobre blanco */
+  --danger: #d70015;
+
+  /* Tipografía del sistema (sin fuentes externas) */
+  --font: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', 'Segoe UI', Roboto, sans-serif;
+
+  /* Espaciado */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+
+  /* Esquinas */
+  --radius-sm: 12px;
+  --radius: 16px;
+  --radius-lg: 20px;
+
+  /* Sombras suaves */
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 8px 24px rgba(0, 0, 0, 0.06);
+  --shadow-hover: 0 2px 4px rgba(0, 0, 0, 0.06), 0 12px 32px rgba(0, 0, 0, 0.08);
+
+  /* Movimiento */
+  --dur: 200ms;
+  --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+
+  /* Foco visible (teclado): azul sólido, contraste 4.7:1 sobre blanco */
+  --focus-ring: 2px solid #0071e3;
+}
+
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
-  font-family: system-ui, sans-serif;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.4;
   min-height: 100vh;
   display: grid;
   place-items: center;
-  padding: 1rem;
+  padding: var(--space-4);
 }
 .container {
-  background: white;
-  padding: 2rem;
-  border-radius: 20px;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+  background: var(--card);
+  padding: var(--space-6) var(--space-5);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
   width: 100%;
   max-width: 450px;
 }
-h1 { text-align: center; margin-bottom: 0.5rem; color: #333; }
-.subtitle { text-align: center; color: #666; margin-bottom: 2rem; }
+h1 {
+  text-align: center;
+  margin-bottom: var(--space-2);
+  color: var(--text);
+  font-size: 1.75rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.subtitle { text-align: center; color: var(--text-2); margin-bottom: var(--space-6); }
 
 .password-display {
   display: flex;
