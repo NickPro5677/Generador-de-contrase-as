@@ -10,39 +10,11 @@ const generateBtn = document.getElementById('generateBtn');
 const strengthText = document.getElementById('strengthText');
 const strengthBar = document.getElementById('strengthBar');
 
-const uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-const lowercase = 'abcdefghijklmnopqrstuvwxyz';
-const numbers = '0123456789';
-const symbols = '!@#$%^&*()_+-=[]{}|;:,.<>?';
-
 // Actualizar valor del slider
 lengthInput.addEventListener('input', () => {
   lengthValue.textContent = lengthInput.value;
   generatePassword(); // regenera al mover
 });
-
-// Índice aleatorio uniforme en [0, max) usando el generador criptográfico
-// del navegador. Descarta los valores del final del rango (rejection sampling)
-// para que el módulo no favorezca a ningún carácter.
-function secureRandomIndex(max) {
-  const limit = Math.floor(0x100000000 / max) * max;
-  const buf = new Uint32Array(1);
-  let value;
-  do {
-    crypto.getRandomValues(buf);
-    value = buf[0];
-  } while (value >= limit);
-  return value % max;
-}
-
-// Mezcla un arreglo al azar (algoritmo Fisher-Yates) usando el generador seguro
-function secureShuffle(arr) {
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = secureRandomIndex(i + 1);
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-  }
-  return arr;
-}
 
 // Generar contraseña
 function generatePassword() {
@@ -59,20 +31,8 @@ function generatePassword() {
     return;
   }
 
-  const chars = groups.join('');
   const length = Number(lengthInput.value);
-  const password = [];
-
-  // 1) Garantiza al menos un carácter de cada grupo marcado
-  for (const group of groups) {
-    password.push(group.charAt(secureRandomIndex(group.length)));
-  }
-  // 2) Rellena el resto con cualquier carácter permitido
-  while (password.length < length) {
-    password.push(chars.charAt(secureRandomIndex(chars.length)));
-  }
-  // 3) Mezcla para que los garantizados no queden siempre al principio
-  passwordInput.value = secureShuffle(password).join('');
+  passwordInput.value = buildPassword(length, groups);
 
   updateStrength(length, uppercaseCheck.checked, lowercaseCheck.checked, numbersCheck.checked, symbolsCheck.checked);
 }
@@ -90,14 +50,7 @@ copyBtn.addEventListener('click', () => {
 
 // Actualizar barra de fuerza
 function updateStrength(length, hasUpper, hasLower, hasNumber, hasSymbol) {
-  let strength = 0;
-  if (length >= 8) strength++;
-  if (length >= 12) strength++;
-  if (length >= 16) strength++;
-  if (hasUpper) strength++;
-  if (hasLower) strength++;
-  if (hasNumber) strength++;
-  if (hasSymbol) strength++;
+  const strength = strengthScore(length, hasUpper, hasLower, hasNumber, hasSymbol);
 
   strengthBar.className = '';
   if (strength <= 2) {
