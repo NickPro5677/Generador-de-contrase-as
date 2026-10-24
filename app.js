@@ -35,29 +35,46 @@ function secureRandomIndex(max) {
   return value % max;
 }
 
+// Mezcla un arreglo al azar (algoritmo Fisher-Yates) usando el generador seguro
+function secureShuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = secureRandomIndex(i + 1);
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
 // Generar contraseña
 function generatePassword() {
-  let chars = '';
-  if (uppercaseCheck.checked) chars += uppercase;
-  if (lowercaseCheck.checked) chars += lowercase;
-  if (numbersCheck.checked) chars += numbers;
-  if (symbolsCheck.checked) chars += symbols;
+  // Lista de los grupos de caracteres que el usuario marcó
+  const groups = [];
+  if (uppercaseCheck.checked) groups.push(uppercase);
+  if (lowercaseCheck.checked) groups.push(lowercase);
+  if (numbersCheck.checked) groups.push(numbers);
+  if (symbolsCheck.checked) groups.push(symbols);
 
-  if (chars === '') {
+  if (groups.length === 0) {
     passwordInput.value = 'Selecciona al menos una opción 😅';
     updateStrength(0);
     return;
   }
 
-  let password = '';
-  const length = lengthInput.value;
-  
-  for (let i = 0; i < length; i++) {
-    password += chars.charAt(secureRandomIndex(chars.length));
-  }
+  const chars = groups.join('');
+  const length = Number(lengthInput.value);
+  const password = [];
 
-  passwordInput.value = password;
-  updateStrength(length, uppercaseCheck.checked, numbersCheck.checked, symbolsCheck.checked);
+  // 1) Garantiza al menos un carácter de cada grupo marcado
+  for (const group of groups) {
+    password.push(group.charAt(secureRandomIndex(group.length)));
+  }
+  // 2) Rellena el resto con cualquier carácter permitido
+  while (password.length < length) {
+    password.push(chars.charAt(secureRandomIndex(chars.length)));
+  }
+  // 3) Mezcla para que los garantizados no queden siempre al principio
+  passwordInput.value = secureShuffle(password).join('');
+
+  updateStrength(length, uppercaseCheck.checked, lowercaseCheck.checked, numbersCheck.checked, symbolsCheck.checked);
 }
 
 // Copiar al portapapeles
@@ -72,12 +89,13 @@ copyBtn.addEventListener('click', () => {
 });
 
 // Actualizar barra de fuerza
-function updateStrength(length, hasUpper, hasNumber, hasSymbol) {
+function updateStrength(length, hasUpper, hasLower, hasNumber, hasSymbol) {
   let strength = 0;
   if (length >= 8) strength++;
   if (length >= 12) strength++;
   if (length >= 16) strength++;
   if (hasUpper) strength++;
+  if (hasLower) strength++;
   if (hasNumber) strength++;
   if (hasSymbol) strength++;
 
