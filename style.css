@@ -79,89 +79,130 @@ h1 {
 
 .password-display {
   display: flex;
-  margin-bottom: 1.5rem;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
 }
 #password {
   flex: 1;
   /* Sin esto el campo pide unos 290px fijos y empuja la tarjeta fuera de la pantalla */
   width: 0;
   min-width: 0;
-  padding: 1rem;
-  font-size: 1.1rem;
-  border: 2px solid #ddd;
-  border-right: none;
-  border-radius: 12px 0 0 12px;
-  background: #f9f9f9;
+  padding: var(--space-4);
+  font-family: 'SF Mono', ui-monospace, Menlo, Consolas, monospace;
+  font-size: 1.05rem;
+  color: var(--text);
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background: var(--fill);
+  transition: border-color var(--dur) var(--ease), background var(--dur) var(--ease);
 }
+#password::placeholder { color: var(--text-2); }
 #copyBtn {
-  padding: 0 1.2rem;
-  background: #667eea;
-  color: white;
+  flex: none;
+  width: 56px;
+  background: var(--fill);
+  color: var(--text);
   border: none;
-  border-radius: 0 12px 12px 0;
+  border-radius: var(--radius-sm);
   font-size: 1.3rem;
   cursor: pointer;
+  transition: background var(--dur) var(--ease), transform var(--dur) var(--ease);
 }
+#copyBtn:hover { background: var(--fill-hover); }
+#copyBtn:active { transform: scale(0.95); }
 
+/* Opciones agrupadas como una lista de Ajustes */
 .options {
   display: grid;
-  gap: 0.8rem;
-  margin-bottom: 1.5rem;
+  margin: var(--space-5) 0;
+  background: var(--fill);
+  border-radius: var(--radius);
+  overflow: hidden;
 }
+.options > label,
+.option {
+  padding: var(--space-3) var(--space-4);
+  min-height: 48px; /* área cómoda para el dedo */
+}
+.options > * + * { border-top: 1px solid var(--border); }
 .options label {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--space-3);
   cursor: pointer;
 }
-.option { display: flex; justify-content: space-between; align-items: center; }
+.option { display: flex; justify-content: space-between; align-items: center; gap: var(--space-4); }
+.option label { font-weight: 500; }
+#lengthValue { color: var(--accent-text); font-variant-numeric: tabular-nums; }
+/* Mismo truco que el campo: sin width/min-width en 0 el slider pide 129px fijos y desborda a 320px */
+#length { flex: 1; width: 0; min-width: 0; max-width: 60%; }
+input[type="checkbox"] { width: 20px; height: 20px; flex: none; }
+input[type="checkbox"],
+input[type="range"] { accent-color: var(--accent); cursor: pointer; }
 
 #generateBtn {
   width: 100%;
-  padding: 1rem;
-  background: #667eea;
-  color: white;
+  padding: var(--space-4);
+  background: var(--accent);
+  color: var(--on-accent);
   border: none;
-  border-radius: 12px;
-  font-size: 1.1rem;
-  font-weight: bold;
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  font-size: 1.05rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: 0.3s;
+  transition: background var(--dur) var(--ease), transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
 }
-#generateBtn:hover { background: #5a6fd8; transform: translateY(-2px); }
+#generateBtn:hover { background: var(--accent-hover); box-shadow: var(--shadow-hover); }
+#generateBtn:active { transform: scale(0.98); }
 
-.strength { margin-top: 1.5rem; text-align: center; }
+.strength { margin-top: var(--space-5); text-align: center; color: var(--text-2); font-size: 0.95rem; }
+#strengthText { color: var(--text); font-weight: 600; }
 .strength-bar {
-  height: 10px;
-  background: #eee;
-  border-radius: 5px;
+  height: 6px;
+  background: var(--fill-hover);
+  border-radius: 999px;
   overflow: hidden;
-  margin-top: 0.5rem;
+  margin-top: var(--space-2);
 }
 #strengthBar {
   height: 100%;
   width: 100%;
-  background: #4ade80;
-  transition: all 0.4s;
+  border-radius: inherit;
+  transition: width 250ms var(--ease), background-color 250ms var(--ease);
 }
-.weak { background: #ef4444; width: 30%; }
-.medium { background: #f59e0b; width: 60%; }
-.strong { background: #10b981; width: 80%; }
-.very-strong { background: #4ade80; width: 100%; }
+.weak { background: var(--danger); width: 30%; }
+.medium { background: #b25000; width: 60%; }
+.strong { background: #248a3d; width: 80%; }
+.very-strong { background: var(--success); width: 100%; }
 /* Aviso al copiar (lo leen también los lectores de pantalla) */
 .copy-status {
-  min-height: 1.2em;
-  margin: 6px 0 0;
-  font-size: 0.9rem;
-  color: #2e7d32;
+  min-height: 1.4em;
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--success);
 }
 .copy-status.error {
-  color: #c62828;
+  color: var(--danger);
 }
 
 /* Borde visible al moverse con el teclado (Tab) */
 button:focus-visible,
 input:focus-visible {
-  outline: 3px solid #4a90e2;
+  outline: var(--focus-ring);
   outline-offset: 2px;
+}
+
+/* Teléfonos pequeños: un poco menos de relleno en la tarjeta */
+@media (max-width: 360px) {
+  .container { padding: var(--space-5) var(--space-4); }
+}
+
+/* Quien pide menos movimiento en su teléfono no ve animaciones */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+  #copyBtn:active, #generateBtn:active { transform: none; }
 }
